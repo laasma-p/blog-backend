@@ -22,6 +22,10 @@ const Post = sequelize.define(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
+    isPinned: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     timestamps: false,
