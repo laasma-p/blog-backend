@@ -12,4 +12,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/pinned", async (req, res) => {
+  try {
+    const pinnedPosts = await Post.findAll({
+      where: { isPinned: true },
+    });
+
+    res.json(pinnedPosts);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch featured posts." });
+  }
+});
+
 module.exports = router;
