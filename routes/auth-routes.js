@@ -16,10 +16,13 @@ router.post("/register", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const role = email === process.env.EMAIL ? process.env.ROLE : "user";
+
     const newUser = await User.create({
       firstName,
       email,
       password: hashedPassword,
+      role,
     });
 
     res
