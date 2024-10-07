@@ -13,6 +13,7 @@ const authenticateToken = (req, res, next) => {
     }
 
     req.userId = user.userId;
+    req.role = user.role;
     next();
   });
 };
