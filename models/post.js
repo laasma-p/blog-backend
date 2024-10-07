@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../sequelize");
+const User = require("./user");
 
 const Post = sequelize.define(
   "post",
@@ -31,5 +32,8 @@ const Post = sequelize.define(
     timestamps: false,
   }
 );
+
+Post.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
+User.hasMany(Post, { foreignKey: "userId" });
 
 module.exports = Post;
