@@ -18,6 +18,11 @@ const Post = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("published", "draft"),
+      allowNull: false,
+      defaultValue: "published",
+    },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
