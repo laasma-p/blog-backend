@@ -34,6 +34,8 @@ router.get("/pinned", async (req, res) => {
         isPinned: true,
         userId: adminUser.id,
       },
+      order: [["date", "DESC"]],
+      limit: 3,
     });
 
     res.json(pinnedPosts);
