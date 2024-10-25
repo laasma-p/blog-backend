@@ -16,4 +16,27 @@ router.get("/posts-list", authenticateToken, async (req, res) => {
   }
 });
 
+router.delete("/delete-post/:postId", authenticateToken, async (req, res) => {
+  const postId = req.params.postId;
+
+  try {
+    const post = await Post.findOne({
+      where: {
+        id: postId,
+        userId: req.userId,
+      },
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    await post.destroy();
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
