@@ -39,4 +39,29 @@ router.delete("/delete-post/:postId", authenticateToken, async (req, res) => {
   }
 });
 
+router.put("/pin-post/:postId", authenticateToken, async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const post = await Post.findOne({
+      where: { id: postId, userId: req.userId },
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    post.isPinned = !post.isPinned;
+    await post.save();
+
+    res.status(200).json({
+      message: post.isPinned
+        ? "Post pinned successfully"
+        : "Post unpinned successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
