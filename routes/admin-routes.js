@@ -64,4 +64,21 @@ router.put("/pin-post/:postId", authenticateToken, async (req, res) => {
   }
 });
 
+router.post("/add-a-post", authenticateToken, async (req, res) => {
+  const { title, content, status } = req.body;
+
+  try {
+    const newPost = await Post.create({
+      title,
+      content,
+      status,
+      userId: req.userId,
+    });
+
+    res.status(201).json(newPost);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
