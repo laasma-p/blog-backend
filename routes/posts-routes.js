@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     }
 
     const posts = await Post.findAll({
-      where: { userId: adminUser.id },
+      where: { userId: adminUser.id, status: "published" },
     });
 
     res.json(posts);
@@ -33,6 +33,7 @@ router.get("/pinned", async (req, res) => {
       where: {
         isPinned: true,
         userId: adminUser.id,
+        status: "published",
       },
       order: [["date", "DESC"]],
       limit: 3,
@@ -56,6 +57,7 @@ router.get("/:id", async (req, res) => {
       where: {
         id: req.params.id,
         userId: adminUser.id,
+        status: "published",
       },
     });
 
