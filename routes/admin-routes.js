@@ -43,12 +43,22 @@ router.put("/pin-post/:postId", authenticateToken, async (req, res) => {
   const { postId } = req.params;
 
   try {
+    const pinnedCount = await Post.count({
+      where: { userId: req.userId, isPinned: true },
+    });
+
     const post = await Post.findOne({
       where: { id: postId, userId: req.userId },
     });
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (!post.isPinned && pinnedCount >= 3) {
+      return res
+        .status(400)
+        .json({ message: "Maximum of 3 pinned posts reached" });
     }
 
     post.isPinned = !post.isPinned;
