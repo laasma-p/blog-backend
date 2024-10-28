@@ -91,4 +91,20 @@ router.post("/add-a-post", authenticateToken, async (req, res) => {
   }
 });
 
+router.get("/:id", authenticateToken, async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.id, userId: req.userId },
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;
