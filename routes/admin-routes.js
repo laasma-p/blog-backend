@@ -107,7 +107,7 @@ router.get("/:id", authenticateToken, async (req, res) => {
   }
 });
 
-router.put("/:id", authenticateToken, async (req, res) => {
+router.put("/edit-post/:id", authenticateToken, async (req, res) => {
   try {
     const post = await Post.findOne({
       where: { id: req.params.id, userId: req.userId },
