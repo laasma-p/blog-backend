@@ -65,7 +65,17 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ message: "Post is not found." });
     }
 
-    res.json(post);
+    const responseData = {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      date: post.date,
+      admin: {
+        firstName: adminUser.firstName,
+      },
+    };
+
+    res.json(responseData);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch individual post." });
   }
