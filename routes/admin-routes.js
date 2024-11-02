@@ -118,7 +118,13 @@ router.put("/edit-post/:id", authenticateToken, async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    await post.update(req.body);
+    const updatePostData = { ...req.body };
+    if (updatePostData.status === "draft") {
+      updatePostData.isPinned = false;
+    }
+
+    await post.update(updatePostData);
+
     res.status(200).json({ message: "Post updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
