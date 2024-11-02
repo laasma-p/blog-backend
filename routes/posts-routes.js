@@ -35,7 +35,7 @@ router.get("/pinned", async (req, res) => {
         userId: adminUser.id,
         status: "published",
       },
-      order: [["date", "DESC"]],
+      order: [["createdAt", "DESC"]],
       limit: 3,
     });
 
@@ -69,7 +69,7 @@ router.get("/:id", async (req, res) => {
       id: post.id,
       title: post.title,
       content: post.content,
-      date: post.date,
+      date: post.createdAt,
       admin: {
         firstName: adminUser.firstName,
       },
