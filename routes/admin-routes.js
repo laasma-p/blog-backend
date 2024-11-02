@@ -8,6 +8,7 @@ router.get("/posts-list", authenticateToken, async (req, res) => {
     const posts = await Post.findAll({
       where: { userId: req.userId },
       attributes: ["id", "title", "createdAt", "isPinned", "status"],
+      order: [["createdAt", "DESC"]],
     });
 
     res.status(200).json(posts);

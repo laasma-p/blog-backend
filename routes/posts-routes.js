@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
 
     const posts = await Post.findAll({
       where: { userId: adminUser.id, status: "published" },
+      order: [["createdAt", "DESC"]],
     });
 
     res.json(posts);
