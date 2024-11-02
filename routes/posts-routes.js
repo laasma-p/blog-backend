@@ -70,6 +70,7 @@ router.get("/:id", async (req, res) => {
       title: post.title,
       content: post.content,
       date: post.createdAt,
+      editDate: post.updatedAt,
       admin: {
         firstName: adminUser.firstName,
       },
