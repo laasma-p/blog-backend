@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
+const Category = require("./Category");
 
 const Post = sequelize.define("post", {
   title: {
@@ -21,5 +22,8 @@ const Post = sequelize.define("post", {
     allowNull: false,
   },
 });
+
+Post.belongsTo(Category, { foreignKey: "categoryId", onDelete: "CASCADE" });
+Category.hasMany(Post, { foreignKey: "categoryId" });
 
 module.exports = Post;
